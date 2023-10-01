@@ -21,9 +21,10 @@ $router->get('/version', function () use ($router) {
 Route::post('login', 'GeneralController@login');
 Route::get('profile', 'GeneralController@profile');
 Route::post('register', 'GeneralController@register');
-Route::post('recipient-register', 'GeneralController@recipientRegister');
 Route::get('check-forgot/{token}', 'GeneralController@checkForgotToken');
+
 Route::get('check-username/{username}', 'GeneralController@checkUsernameExist');
+Route::post('recipient-register', 'GeneralController@recipientRegister');
 Route::get('check-email/{email}', 'GeneralController@checkEmailExist');
 Route::get('check-email-verification/{token}', 'GeneralController@checkEmailVerification');
 Route::get('validate-email-verification/{token}', 'GeneralController@validateEmailVerification');
