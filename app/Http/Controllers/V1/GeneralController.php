@@ -42,14 +42,11 @@ class GeneralController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $user = User::where(function ($q) use ($request) {
-            $q->where('email', addslashes($request->username))
-                ->orWhere('phone', addslashes($request->username));
-        })->where("password", addslashes($request->password))->where('user_type', '!=', 'admin')->first();
+        $user = User::where("email", addslashes($request->email))->where("password", addslashes($request->password))->where('user_type', '!=', 'admin')->first();
 
         $data = [
             "error" => "Unauthorized"
@@ -71,14 +68,11 @@ class GeneralController extends Controller
     public function adminLogin(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $user = User::where(function ($q) use ($request) {
-            $q->where('email', addslashes($request->username))
-                ->orWhere('phone', addslashes($request->username));
-        })->where("password", addslashes($request->password))->where('user_type', 'admin')->first();
+        $user = User::where("email", addslashes($request->email))->where("password", addslashes($request->password))->where('user_type', 'admin')->first();
 
         $data = [
             "error" => "Unauthorized"
