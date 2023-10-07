@@ -318,7 +318,7 @@ class GeneralController extends Controller
         // $template = $newsletterData->body;
 
         $user = $request->first_name . " " . $request->last_name;
-        $link = "https://digismm.pro/verification?token=$code";
+        // $link = "https://digismm.pro/verification?token=$code";
 
         $bodyText = '';
         // $bodyText = str_replace('$user', $user, $template);
