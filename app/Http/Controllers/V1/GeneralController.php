@@ -311,72 +311,20 @@ class GeneralController extends Controller
 
         $this->validate($request, $rules);
 
-        // $notifications = "no";
-        // if ($request->notifications == 1) {
-        //     $notifications = "yes";
-        // }
-        $notifications = "yes";
-
-        // $donation_consent = "no";
-        // if ($request->donation_consent == 1) {
-        //     $donation_consent = "yes";
-        // }
-        $donation_consent = "yes";
-
-        $currentTime = date('Y-m-d H:i:s');
-        $code = strtotime($currentTime);
-        $otp = rand(100000, 999999);
-
-        $stateRow = State::select('id')->where('name', $request->state)->firstOrFail();
-        $cityRow = City::select('id')->where('name', $request->city)->firstOrFail();
-        $cityAreaCount = CityArea::select('id')->where('name', 'like', '%' . $request->city_area . '%')->where('city_id', $cityRow->id)->count();
-        $cityAreaId = 0;
-        if ($cityAreaCount == 0) {
-            $area = ['name' => $request->city_area, 'city_id' => $cityRow->id, 'created_ip' => $request->ip()];
-            $cityAreaId = CityArea::create($area)->id;
-        } else {
-            $query = CityArea::select('id')->where('name', 'like', '%' . $request->city_area . '%')->where('city_id', $cityRow->id)->first();
-            $cityAreaId = $query->id;
-        }
-
-        $bloodGroup = addslashes($request->group);
-        if (!str_contains($request->group, '-')) {
-            $this->_group = addslashes($request->group) . '+';
-            $this->_group = str_replace(' ', '', $this->_group);
-        }
-
-        $groupRow = BloodGroup::select('id')->where('name', $bloodGroup)->firstOrFail();
-
-
         $userObject = [
+            "name" => addslashes($request->name),
             "email" => addslashes($request->email),
-            "phone" => addslashes($request->phone),
             "password" => addslashes($request->password),
-            "first_name" => addslashes($request->first_name),
-            "last_name" => addslashes($request->last_name),
-            "state_id" => $stateRow->id,
-            "city_id" => $cityRow->id,
-            "area_id" => $cityAreaId,
-            "address" => addslashes($request->address),
-            "user_type" => "donor",
-            "consent" => $donation_consent,
-            "notifications" => $notifications,
-            "email_token" => $code,
-            "sms_token" => $otp,
-            "sms_tkn_time" => $currentTime,
             "created_ip" => $request->ip(),
-            "blood_group" => $groupRow->id,
-            "dob" => $request->dob,
-            "last_bleed" => $request->last_bleed,
         ];
 
         // TODO
-        $subject = 'Sehat Booking Account Registration';
+        $subject = 'Digi SMM Account Registration';
         $newsletterData = Newsletter::findOrFail(2);
         $template = $newsletterData->body;
 
         $user = $request->first_name . " " . $request->last_name;
-        $link = "https://sehatbooking.com/verification?token=$code";
+        $link = "https://digismm.pro/verification?token=$code";
 
         $bodyText = '';
         $bodyText = str_replace('$user', $user, $template);
