@@ -44,19 +44,10 @@ class User extends Model implements
     public static function validationRules()
     {
         return [
+            'name' => 'required|string',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'phone' => 'required|regex:/(03)[0-9]{9}/|unique:users,phone,NULL,id,deleted_at,NULL',
+            'username' => 'required|string|unique:users,username,NULL,id,deleted_at,NULL',
             'password' => 'required|string',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'address' => 'required|string',
-            'state' => 'required|string',
-            'city' => 'required|string',
-            'city_area' => 'required|string',
-            'group' => 'required|string',
-            // 'zip' => 'required|digits:5|integer',
-            // 'notifications' => 'required|in:1,0',
-            // 'register_from' => 'required|in:web,ios,android,postman',
         ];
     }
 

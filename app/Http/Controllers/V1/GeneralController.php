@@ -313,6 +313,7 @@ class GeneralController extends Controller
 
         $userObject = [
             "name" => addslashes($request->name),
+            "username" => addslashes($request->username),
             "email" => addslashes($request->email),
             "password" => addslashes($request->password),
             "created_ip" => $request->ip(),
