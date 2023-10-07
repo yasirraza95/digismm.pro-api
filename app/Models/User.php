@@ -46,7 +46,6 @@ class User extends Model implements
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'username' => 'required|string|unique:users,username,NULL,id,deleted_at,NULL',
             'password' => 'required|string',
         ];
     }
