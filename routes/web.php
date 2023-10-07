@@ -19,6 +19,7 @@ $router->get('/version', function () use ($router) {
 
 
 Route::post('login', 'GeneralController@login');
+Route::post('admin-login', 'GeneralController@adminLogin');
 Route::get('profile', 'GeneralController@profile');
 Route::post('register', 'GeneralController@register');
 Route::get('check-forgot/{token}', 'GeneralController@checkForgotToken');
@@ -61,7 +62,6 @@ Route::post('suggest-area', 'GeneralController@areaSuggestion');
 Route::get('user-views', 'GeneralController@userViews');
 
 
-Route::post('admin-login', 'GeneralController@adminLogin');
 Route::put('admin-password', 'GeneralController@updateAdminPassword');
 Route::get('admin-requests', 'GeneralController@listAdminBloodRequest');
 Route::delete('admin-request/{id}', 'GeneralController@deleteBloodReqById');
