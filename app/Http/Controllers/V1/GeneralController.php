@@ -314,15 +314,15 @@ class GeneralController extends Controller
 
         // TODO
         $subject = 'Digi SMM Account Registration';
-        $newsletterData = Newsletter::findOrFail(2);
-        $template = $newsletterData->body;
+        // $newsletterData = Newsletter::findOrFail(2);
+        // $template = $newsletterData->body;
 
         $user = $request->first_name . " " . $request->last_name;
         $link = "https://digismm.pro/verification?token=$code";
 
         $bodyText = '';
-        $bodyText = str_replace('$user', $user, $template);
-        $bodyText = str_replace('$link', $link, $bodyText);
+        // $bodyText = str_replace('$user', $user, $template);
+        // $bodyText = str_replace('$link', $link, $bodyText);
 
         User::create($userObject);
         // $this->sendEmailToUser($bodyText, $subject, addslashes($request->email));
