@@ -95,7 +95,7 @@ class GeneralController extends Controller
     {
         $this->validate($request, [
             'type' => 'required|in:easypaisa,jazzcash',
-            'amount' => 'required|numbers',
+            'amount' => 'required|numeric',
             'trx_id' => 'required|string|unique:payment,trx_id|NULL,deleted_at,NULL',
             'user_id' => 'required|int|exists:users,id'
         ]);
