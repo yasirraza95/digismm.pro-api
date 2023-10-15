@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Payment extends Model
 {
     use SoftDeletes;
-    protected $table = "payment";
+    protected $table = "payments";
     public $timestamps = false;
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
