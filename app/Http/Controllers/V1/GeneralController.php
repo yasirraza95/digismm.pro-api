@@ -110,7 +110,7 @@ class GeneralController extends Controller
         ];
 
         $status = 200;
-        $result = $this->successResponse($request, $auth, $status);
+        $result = $this->successResponse($request, $response, $status);
         return $result;
     }
 
