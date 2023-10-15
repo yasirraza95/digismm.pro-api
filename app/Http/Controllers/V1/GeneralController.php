@@ -456,9 +456,9 @@ class GeneralController extends Controller
         return $result;
     }
 
-    public function listBloodGp(Request $request)
+    public function listPayments(Request $request)
     {
-        $result = BloodGroup::get();
+        $result = Payment::get();
 
         $counter = count($result);
         $counter > 0 ? ($status = 200) : ($status = 404);

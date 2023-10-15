@@ -24,6 +24,7 @@ Route::get('profile', 'GeneralController@profile');
 Route::post('register', 'GeneralController@register');
 Route::get('check-forgot/{token}', 'GeneralController@checkForgotToken');
 Route::post('make-payment', 'GeneralController@makePayment');
+Route::get('list-payments', 'GeneralController@listPayments');
 
 Route::get('check-username/{username}', 'GeneralController@checkUsernameExist');
 Route::post('recipient-register', 'GeneralController@recipientRegister');
@@ -38,7 +39,6 @@ Route::get(
     'check-forgot-token/{token}',
     'GeneralController@checkForgotToken'
 );
-Route::get('list-blood-gp', 'GeneralController@listBloodGp');
 Route::get('list-years', 'GeneralController@listYears');
 Route::get('list-states', 'GeneralController@listStates');
 Route::get('list-cities', 'GeneralController@listCities');
