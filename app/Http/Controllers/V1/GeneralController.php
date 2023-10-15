@@ -97,7 +97,7 @@ class GeneralController extends Controller
             'type' => 'required|in:easypaisa,jazzcash',
             'amount' => 'required|numbers'
             'trx_id' => 'required|alpha_numeric|unique:users,trx_id|NULL,deleted_at,NULL'
-            'user_id' => 'required|int'
+            'user_id' => 'required|int|exists:users,id'
         ]);
 
         $data = ["type" => $request->type, "amount" => $request->amount, "trx_id" => $request->trx_id,
