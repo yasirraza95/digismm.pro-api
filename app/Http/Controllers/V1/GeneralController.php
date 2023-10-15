@@ -101,7 +101,7 @@ class GeneralController extends Controller
         ]);
 
         $data = ["type" => $request->type, "amount" => $request->amount, "trx_id" => $request->trx_id,
-            "user_id" => $request->user_id, "created_ip" => $request->ip()];
+            "created_by" => $request->user_id, "created_ip" => $request->ip()];
 
         $payment = Payment::create($data);
 
