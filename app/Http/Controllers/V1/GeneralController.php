@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
-use App\Models\BloodRequest;
+use App\Models\Payment;
 use App\Models\BloodGroup;
 use App\Models\Subscription;
 use Carbon\Carbon;
