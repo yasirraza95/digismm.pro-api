@@ -91,6 +91,29 @@ class GeneralController extends Controller
         return $this->respondWithToken($request, $user, $token);
     }
 
+    public function makePayment(Request $request)
+    {
+        $this->validate($request, [
+            'type' => 'required|in:easypaisa,jazzcash',
+            'amount' => 'required|numbers'
+            'trx_id' => 'required|alpha_numeric|unique:users,trx_id|NULL,deleted_at,NULL'
+            'user_id' => 'required|int'
+        ]);
+
+        $data = ["type" => $request->type, "amount" => $request->amount, "trx_id" => $request->trx_id,
+            "user_id" => $request->user_id, "created_ip" => $request->ip()];
+
+        $payment = Payment::create($data);
+
+        $response = [
+            "message" => "Payment information has been sent for verification, you will be informed via email"
+        ];
+
+        $status = 200;
+        $result = $this->successResponse($request, $auth, $status);
+        return $result;
+    }
+
     public function profile(Request $request)
     {
         $auth = Auth::user();
