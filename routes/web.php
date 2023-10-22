@@ -38,6 +38,10 @@ Route::post('add-service', 'GeneralController@addService');
 Route::put('service/{id}', 'GeneralController@updateService');
 Route::delete('service/{id}', 'GeneralController@deleteService');
 
+// TODO payment check
+Route::post('order', 'GeneralController@newOrder');
+
+
 Route::get('check-username/{username}', 'GeneralController@checkUsernameExist');
 Route::post('recipient-register', 'GeneralController@recipientRegister');
 Route::get('check-email/{email}', 'GeneralController@checkEmailExist');

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Newsletter;
 use App\Models\User;
 use App\Models\Service;
+use App\Models\Order;
 use App\Models\State;
 use App\Models\City;
 use App\Models\CityArea;
@@ -530,6 +531,7 @@ class GeneralController extends Controller
 
     public function updateService(Request $request)
     {
+        $rules['category'] = 'required|string|exists:categories,name';
         $rules['name'] = 'required|string';
         $rules['rate'] = 'string';
         $rules['price'] = 'string';
@@ -543,9 +545,11 @@ class GeneralController extends Controller
         $price = $request->price;
         $updated_by = $request->updated_by;
         $ip = $request->ip();
+
+        $category = Category::findOrFail($request->category);
         
         $instance = Service::findOrFail($id);
-        $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name, "rate" => $rate, "price" => $price];
+        $update = ['category_id' => $category->id, "updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name, "rate" => $rate, "price" => $price];
         $instance->update($update);
         
         $data = [
@@ -1149,17 +1153,41 @@ class GeneralController extends Controller
 
     public function addService(Request $request)
     {
+        $rules['category'] = 'required|string|exists:categories,name';
         $rules['name'] = 'required|string|unique:services,name';
         $rules['rate'] = 'string';
         $rules['price'] = 'string';
         $rules['created_by'] = 'required|int|exists:users,id'
         $this->validate($request, $rules);
 
-        $insert = ['created_by' => $request->created_by, 'created_ip' => $request->ip(), 'name' => $request->name, 'rate' => $request->rate, 'price' => $request->price ];
+        $category = Category::findOrFail($request->category);
+
+        $insert = ['category_id' => $category->id, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'name' => $request->name, 'rate' => $request->rate, 'price' => $request->price ];
         Service::insert($insert);
 
         $data = [
             'response' => "Data inserted",
+        ];
+        $status = 200;
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function newOrder(Request $request)
+    {
+        $rules['category'] = 'required|string|exists:categories,name';
+        $rules['service'] = 'required|string|exists:services,name';
+        $rules['link'] = 'string';
+        $rules['quantity'] = 'number';
+        $rules['created_by'] = 'required|int|exists:users,id'
+        $this->validate($request, $rules);
+
+        $insert = ['category' => $request->category, 'service' => $request->service, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity, 'price' => $request->price ];
+        Order::insert($insert);
+
+        $data = [
+            'response' => "Order created successfully",
         ];
         $status = 200;
 
