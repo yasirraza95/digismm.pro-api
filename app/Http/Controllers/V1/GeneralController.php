@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Newsletter;
 use App\Models\User;
+use App\Models\Service;
 use App\Models\State;
 use App\Models\City;
 use App\Models\CityArea;
@@ -465,6 +466,75 @@ class GeneralController extends Controller
 
         $data = [
             'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function listServices(Request $request)
+    {
+        $result = Payment::get();
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function paymentAction(Request $request)
+    {
+        $rules['updated_by'] = 'required|int|exists:users,id';
+        $rules['status'] = 'required|in:approved,rejected';
+
+        
+        $this->validate($request, $rules);
+        
+        $id = $request->id;
+        $type = $request->type;
+        $status = $request->status;
+        $updated_by = $request->updated_by;
+        $ip = $request->ip();
+        
+        $instance = Payment::findOrFail($id);
+        $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "status" => $status];
+        $instance->update($update);
+        
+        $data = [
+            'response' => "Payment status updated",
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function updateService(Request $request)
+    {
+        $rules['name'] = 'required|string';
+        $rules['rate'] = 'string';
+        $rules['price'] = 'string';
+        $rules['updated_by'] = 'required|int|exists:users,id';
+        
+        $this->validate($request, $rules);
+        
+        $id = $request->id;
+        $name = $request->name;
+        $rate = $request->rate;
+        $price = $request->price;
+        $updated_by = $request->updated_by;
+        $ip = $request->ip();
+        
+        $instance = Payment::findOrFail($id);
+        $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name, "rate" => $rate, "price" => $price];
+        $instance->update($update);
+        
+        $data = [
+            'response' => "Service information updated",
         ];
 
         $result = $this->successResponse($request, $data, $status);
@@ -1036,26 +1106,16 @@ class GeneralController extends Controller
         return $result;
     }
 
-    public function addVolunteer(Request $request)
+    public function addService(Request $request)
     {
-        $instance = User::select('id')->where('user_type', 'admin')->first();
-
-        $rules['name'] = 'required|string';
-        $rules['image'] = 'required|image';
-        // $rules['name'] = 'required|string';
+        $rules['name'] = 'required|string|unique:services,name';
+        $rules['rate'] = 'string';
+        $rules['price'] = 'string';
+        $rules['created_by'] = 'required|int|exists:users,id'
         $this->validate($request, $rules);
 
-        $insert = [];
-
-        $dateTime = date('Ymd_His');
-        $name = $request->name;
-        $image = $request->file('image');
-        $imageName = $dateTime . '-' . $image->getClientOriginalName();
-        $savePath = public_path('/upload/');
-        $image->move($savePath, $imageName);
-
-        $insert = ['created_by' => $instance->id, 'created_ip' => $request->ip(), 'image' => $imageName, 'name' => $name ];
-        Volunteer::insert($insert);
+        $insert = ['created_by' => $request->created_by, 'created_ip' => $request->ip(), 'name' => $request->name, 'rate' => $request->rate, 'price' => $request->price ];
+        Service::insert($insert);
 
         $data = [
             'response' => "Data inserted",
@@ -1115,8 +1175,7 @@ class GeneralController extends Controller
     public function contactSubmit(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'name' => 'required|string',
             'email' => 'required|email',
             'subject' => 'required|string',
             'message' => 'required|string',
@@ -1125,14 +1184,13 @@ class GeneralController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->messages(), 422);
         } else {
-            $subject = 'Contact Us in Sehat Booking';
+            $subject = 'Contact Us in DigiSMM';
 
             $newsletterData = Newsletter::findOrFail(2);
 
             $bodyText = "";
             $template = $newsletterData->body;
-            $bodyText = str_replace('$first_name', $request->first_name, $template);
-            $bodyText = str_replace('$last_name', $request->last_name, $bodyText);
+            $bodyText = str_replace('$name', $request->name, $template);
             $bodyText = str_replace('$email', $request->email, $bodyText);
             $bodyText = str_replace('$subject', $request->subject, $bodyText);
             $bodyText = str_replace('$message', $request->message, $bodyText);
@@ -1292,9 +1350,17 @@ class GeneralController extends Controller
         }
     }
 
-    public function deleteBloodReqById(Request $request)
+    public function deleteService(Request $request)
     {
-        $result = BloodRequest::findOrFail($request->id)->delete();
+        $instance = User::where('user_type', 'admin')->findOrFail($id);
+
+        $rules['deleted_by'] = 'required|int|exists:users,id';
+        $this->validate($request, $rules);
+
+        $instance = Service::findOrFail($request->id);
+        $instance->deleted_by = $request->deleted_by;
+        $instance->save();
+        $instance->delete();
 
         $status = 200;
         $message = "Record deleted";

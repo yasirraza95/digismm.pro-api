@@ -25,6 +25,12 @@ Route::post('register', 'GeneralController@register');
 Route::get('check-forgot/{token}', 'GeneralController@checkForgotToken');
 Route::post('make-payment', 'GeneralController@makePayment');
 Route::get('list-payments', 'GeneralController@listPayments');
+Route::put('payment-action/{id}', 'GeneralController@paymentAction');
+Route::post('contact', 'GeneralController@contactSubmit');
+Route::get('list-services', 'GeneralController@listServices');
+Route::post('add-service', 'GeneralController@addService');
+Route::put('service/{id}', 'GeneralController@updateService');
+Route::delete('service/{id}', 'GeneralController@deleteService');
 
 Route::get('check-username/{username}', 'GeneralController@checkUsernameExist');
 Route::post('recipient-register', 'GeneralController@recipientRegister');
@@ -43,7 +49,6 @@ Route::get('list-years', 'GeneralController@listYears');
 Route::get('list-states', 'GeneralController@listStates');
 Route::get('list-cities', 'GeneralController@listCities');
 Route::get('get-city-by-state/{name}', 'GeneralController@getCitiesByStateName');
-Route::get('get-city-area-by-city/{name}', 'GeneralController@getCityAreaByCityName');
 Route::put('update/{id}', 'GeneralController@updateUser');
 Route::post('update-admin-password/{id}', 'GeneralController@updateAdmin');
 Route::post('update-admin-image/{id}', 'GeneralController@updateAdminImage');
@@ -51,7 +56,6 @@ Route::put(
     'update-password/{token}',
     'GeneralController@updatePassword'
 );
-Route::post('contact', 'GeneralController@contactSubmit');
 Route::post('blood-request', 'GeneralController@bloodRequest');
 Route::get('list-blood-request/{type}', 'GeneralController@listBloodRequest');
 Route::get('list-donor', 'GeneralController@listBloodDonor');
@@ -67,11 +71,9 @@ Route::put('admin-password', 'GeneralController@updateAdminPassword');
 Route::get('admin-requests', 'GeneralController@listAdminBloodRequest');
 Route::delete('admin-request/{id}', 'GeneralController@deleteBloodReqById');
 Route::delete('admin-donor/{id}', 'GeneralController@deleteDonorById');
-Route::delete('volunteer/{id}', 'GeneralController@deleteVolunteerById');
 Route::get('donor-counter', 'GeneralController@donorCounter');
 Route::get('request-counter', 'GeneralController@requestCounter');
 Route::get('list-volunteers', 'GeneralController@listVolunteers');
 Route::get('list-admin-volunteers', 'GeneralController@listAdminVolunteers');
-Route::post('volunteer', 'GeneralController@addVolunteer');
 
 // TODO deletion of blood donor, blood requests, listing of blood requests,  profile
