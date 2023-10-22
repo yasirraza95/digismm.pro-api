@@ -474,7 +474,22 @@ class GeneralController extends Controller
 
     public function listServices(Request $request)
     {
-        $result = Payment::get();
+        $result = Service::get();
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function listServices(Request $request)
+    {
+        $result = Category::get();
 
         $counter = count($result);
         $counter > 0 ? ($status = 200) : ($status = 404);
@@ -529,12 +544,38 @@ class GeneralController extends Controller
         $updated_by = $request->updated_by;
         $ip = $request->ip();
         
-        $instance = Payment::findOrFail($id);
+        $instance = Service::findOrFail($id);
         $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name, "rate" => $rate, "price" => $price];
         $instance->update($update);
         
         $data = [
             'response' => "Service information updated",
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function updateCategory(Request $request)
+    {
+        $rules['name'] = 'required|string';
+        $rules['updated_by'] = 'required|int|exists:users,id';
+        
+        $this->validate($request, $rules);
+        
+        $id = $request->id;
+        $name = $request->name;
+        $rate = $request->rate;
+        $price = $request->price;
+        $updated_by = $request->updated_by;
+        $ip = $request->ip();
+        
+        $instance = Category::findOrFail($id);
+        $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name];
+        $instance->update($update);
+        
+        $data = [
+            'response' => "Category information updated",
         ];
 
         $result = $this->successResponse($request, $data, $status);
@@ -1126,6 +1167,24 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function addCategory(Request $request)
+    {
+        $rules['name'] = 'required|string|unique:categories,name';
+        $rules['created_by'] = 'required|int|exists:users,id'
+        $this->validate($request, $rules);
+
+        $insert = ['created_by' => $request->created_by, 'created_ip' => $request->ip(), 'name' => $request->name];
+        Category::insert($insert);
+
+        $data = [
+            'response' => "Data inserted",
+        ];
+        $status = 200;
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function updatePassword(Request $request)
     {
         $token = $request->token;
@@ -1352,12 +1411,30 @@ class GeneralController extends Controller
 
     public function deleteService(Request $request)
     {
-        $instance = User::where('user_type', 'admin')->findOrFail($id);
-
         $rules['deleted_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
         $instance = Service::findOrFail($request->id);
+        $instance->deleted_by = $request->deleted_by;
+        $instance->save();
+        $instance->delete();
+
+        $status = 200;
+        $message = "Record deleted";
+        $data = [
+            'response' => $message,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function deleteCategory(Request $request)
+    {
+        $rules['deleted_by'] = 'required|int|exists:users,id';
+        $this->validate($request, $rules);
+
+        $instance = Category::findOrFail($request->id);
         $instance->deleted_by = $request->deleted_by;
         $instance->save();
         $instance->delete();

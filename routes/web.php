@@ -27,6 +27,12 @@ Route::post('make-payment', 'GeneralController@makePayment');
 Route::get('list-payments', 'GeneralController@listPayments');
 Route::put('payment-action/{id}', 'GeneralController@paymentAction');
 Route::post('contact', 'GeneralController@contactSubmit');
+
+Route::get('list-categories', 'GeneralController@listCategories');
+Route::post('add-category', 'GeneralController@addCategory');
+Route::put('category/{id}', 'GeneralController@updateCategory');
+Route::delete('category/{id}', 'GeneralController@deleteCategory');
+
 Route::get('list-services', 'GeneralController@listServices');
 Route::post('add-service', 'GeneralController@addService');
 Route::put('service/{id}', 'GeneralController@updateService');
