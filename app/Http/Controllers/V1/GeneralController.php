@@ -1180,7 +1180,7 @@ class GeneralController extends Controller
         $rules['service'] = 'required|string|exists:services,name';
         $rules['link'] = 'string';
         $rules['quantity'] = 'number';
-        $rules['created_by'] = 'required|int|exists:users,id'
+        $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
         $insert = ['category' => $request->category, 'service' => $request->service, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity, 'price' => $request->price ];
