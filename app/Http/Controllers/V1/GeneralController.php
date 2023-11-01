@@ -1157,7 +1157,7 @@ class GeneralController extends Controller
         $rules['name'] = 'required|string|unique:services,name';
         $rules['rate'] = 'string';
         $rules['price'] = 'string';
-        $rules['created_by'] = 'required|int|exists:users,id'
+        $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
         $category = Category::findOrFail($request->category);
