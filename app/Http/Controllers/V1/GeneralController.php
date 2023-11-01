@@ -99,7 +99,7 @@ class GeneralController extends Controller
             'type' => 'required|in:easypaisa,jazzcash',
             'amount' => 'required|numeric',
             'trx_id' => 'required|string|unique:payments,trx_id',
-            'user_id' => 'required|int|exists:users,id';
+            'user_id' => 'required|int|exists:users,id'
         ]);
 
         $data = ["type" => $request->type, "amount" => $request->amount, "trx_id" => $request->trx_id,
