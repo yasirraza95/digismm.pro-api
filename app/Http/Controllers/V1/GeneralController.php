@@ -99,7 +99,7 @@ class GeneralController extends Controller
             'type' => 'required|in:easypaisa,jazzcash',
             'amount' => 'required|numeric',
             'trx_id' => 'required|string|unique:payments,trx_id',
-            'user_id' => 'required|int|exists:users,id'
+            'user_id' => 'required|int|exists:users,id';
         ]);
 
         $data = ["type" => $request->type, "amount" => $request->amount, "trx_id" => $request->trx_id,
@@ -1198,7 +1198,7 @@ class GeneralController extends Controller
     public function addCategory(Request $request)
     {
         $rules['name'] = 'required|string|unique:categories,name';
-        $rules['created_by'] = 'required|int|exists:users,id'
+        $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
         $insert = ['created_by' => $request->created_by, 'created_ip' => $request->ip(), 'name' => $request->name];
