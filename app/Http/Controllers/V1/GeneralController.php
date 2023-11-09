@@ -126,16 +126,17 @@ class GeneralController extends Controller
 
     public function userInfo(Request $request)
     {
-        $user = User::select('id', 'points')->findOrFail($request->id);
-        $order = Order::selectRaw('sum(price) as spent')->where('created_by', $request->id)->whereNotIn('status', ['cancelled', 'refunded'])->first();
-        $totalOrder = Order::where('created_by', $request->id)->count();
-        $completedOrder = Order::where('created_by', $request->id)->where('status', 'completed')->count();
-        $processingOrder = Order::where('created_by', $request->id)->where('status', 'processing')->count();
-        $progressOrder = Order::where('created_by', $request->id)->where('status', 'progress')->count();
-        $pendingOrder = Order::where('created_by', $request->id)->where('status', 'pending')->count();
-        $partialOrder = Order::where('created_by', $request->id)->where('status', 'partial')->count();
-        $cancelledOrder = Order::where('created_by', $request->id)->where('status', 'cancelled')->count();
-        $refundedOrder = Order::where('created_by', $request->id)->where('status', 'refunded')->count();
+        $userId = $request->id;
+        $user = User::select('id', 'points')->findOrFail($userId);
+        $order = Order::selectRaw('sum(price) as spent')->where('created_by', $userId)->whereNotIn('status', ['cancelled', 'refunded'])->first();
+        $totalOrder = Order::where('created_by', $userId)->count();
+        $completedOrder = Order::where('created_by', $userId)->where('status', 'completed')->count();
+        $processingOrder = Order::where('created_by', $userId)->where('status', 'processing')->count();
+        $progressOrder = Order::where('created_by', $userId)->where('status', 'progress')->count();
+        $pendingOrder = Order::where('created_by', $userId)->where('status', 'pending')->count();
+        $partialOrder = Order::where('created_by', $userId)->where('status', 'partial')->count();
+        $cancelledOrder = Order::where('created_by', $userId)->where('status', 'cancelled')->count();
+        $refundedOrder = Order::where('created_by', $userId)->where('status', 'refunded')->count();
 
         $response = [
             'balance' => $user->points,
