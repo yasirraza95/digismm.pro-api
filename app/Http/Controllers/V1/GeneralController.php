@@ -140,7 +140,7 @@ class GeneralController extends Controller
 
         $response = [
             'balance' => $user->points,
-            'spent' => $order->spent,
+            'spent' => $order->spent ?? 0,
             'total_orders' => $totalOrder,
             'completed_orders' => $completedOrder,
             'processing_orders' => $processingOrder,
