@@ -124,6 +124,40 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function userInfo(Request $request)
+    {
+        $user = User::select('id', 'points')->findOrFail($request->id);
+        $order = Order::selectRaw('sum(price) as spent')->where('created_by', $request->id)->whereNotIn('status', ['cancelled', 'refunded'])->first();
+        $totalOrder = Order::where('created_by', $request->id)->count();
+        $completedOrder = Order::where('created_by', $request->id)->where('status', 'completed')->count();
+        $processingOrder = Order::where('created_by', $request->id)->where('status', 'processing')->count();
+        $progressOrder = Order::where('created_by', $request->id)->where('status', 'progress')->count();
+        $pendingOrder = Order::where('created_by', $request->id)->where('status', 'pending')->count();
+        $partialOrder = Order::where('created_by', $request->id)->where('status', 'partial')->count();
+        $cancelledOrder = Order::where('created_by', $request->id)->where('status', 'cancelled')->count();
+        $refundedOrder = Order::where('created_by', $request->id)->where('status', 'refunded')->count();
+
+        $response = [
+            'balance' => $user->points,
+            'spent' => $order->spent,
+            'total_orders' => $totalOrder,
+            'completed_orders' => $completedOrder,
+            'processing_orders' => $processingOrder,
+            'progress_orders' => $progressOrder,
+            'pending_orders' => $pendingOrder,
+            'partial_orders' => $partialOrder,
+            'cancelled_orders' => $cancelledOrder,
+            'refunded_orders' => $refundedOrder,
+        ];
+        $status = 200;
+        $data = [
+            'response' => $response,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
