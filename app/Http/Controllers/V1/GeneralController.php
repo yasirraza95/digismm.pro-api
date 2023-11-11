@@ -518,8 +518,8 @@ class GeneralController extends Controller
         foreach($result as $data) {
             $service = Service::where('id', $data->category_id)->first();
             $category = Category::where('id', $data->service_id)->first();
-            $data['service'] = $service;
-            $data['category'] = $category;
+            $data['service'] = $service->name;
+            $data['category'] = $category->name;
 
             $newResult = $data;
         }
