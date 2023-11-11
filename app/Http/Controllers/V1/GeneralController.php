@@ -520,8 +520,8 @@ class GeneralController extends Controller
             $category = Category::where('id', $data->service_id)->first();
             $data['service'] = $service->name;
             $data['category'] = $category->name;
-            $data['created_at'] = date('d-m-Y', strtotime($category->created_at));
-            $data['status'] = ucfirst($category->status);
+            $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
+            $data['status'] = ucfirst($data->status);
 
             $newResult = $data;
         }
