@@ -513,8 +513,6 @@ class GeneralController extends Controller
     {
         $id = $request->id;
         $result = Order::where('created_by', $id)->get();
-        $categoryId = $result->category_id;
-        $serviceId = $result->service_id;
 
         $newResult = [];
         foreach($result as $data) {
