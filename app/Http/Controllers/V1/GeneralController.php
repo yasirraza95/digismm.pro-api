@@ -8,6 +8,7 @@ use App\Models\Subscription;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Newsletter;
 use App\Models\User;
 use App\Models\Service;
