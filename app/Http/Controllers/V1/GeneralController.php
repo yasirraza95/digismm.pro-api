@@ -513,12 +513,24 @@ class GeneralController extends Controller
     {
         $id = $request->id;
         $result = Order::where('created_by', $id)->get();
+        $categoryId = $result->category_id;
+        $serviceId = $result->service_id;
+
+        $newResult = [];
+        foreach($result as $data) {
+            $service = Service::where('id', $data->category_id)->first();
+            $category = Category::where('id', $data->service_id)->first();
+            $data['service'] = $service;
+            $data['category'] = $category;
+
+            $newResult = $data;
+        }
 
         $counter = count($result);
         $counter > 0 ? ($status = 200) : ($status = 404);
 
         $data = [
-            'response' => $result,
+            'response' => $newResult,
             'counter' => $counter,
         ];
 
