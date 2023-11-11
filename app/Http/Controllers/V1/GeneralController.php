@@ -1264,7 +1264,10 @@ class GeneralController extends Controller
         $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
-        $insert = ['category_id' => $request->category_id, 'service_id' => $request->service_id, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity, 'price' => $request->price ];
+        $insert = ['category_id' => $request->category_id, 'service_id' => $request->service_id, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity ];
+        $service = Service::select('price')->where('id', $request->service_id)->first();
+        $insert['price'] = $service->price * $request->quantity;
+
         Order::insert($insert);
 
         $data = [
