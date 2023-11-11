@@ -521,6 +521,7 @@ class GeneralController extends Controller
             $data['service'] = $service->name;
             $data['category'] = $category->name;
             $data['created_at'] = date('d-m-Y', strtotime($category->created_at));
+            $data['status'] = ucfirst($category->created_at);
 
             $newResult = $data;
         }
