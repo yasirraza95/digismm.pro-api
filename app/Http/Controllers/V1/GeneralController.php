@@ -520,6 +520,7 @@ class GeneralController extends Controller
             $category = Category::where('id', $data->service_id)->first();
             $data['service'] = $service->name;
             $data['category'] = $category->name;
+            $data['created_at'] = date('d-m-Y', strtotime($category->created_at));
 
             $newResult = $data;
         }
