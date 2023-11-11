@@ -1228,8 +1228,8 @@ class GeneralController extends Controller
 
     public function newOrder(Request $request)
     {
-        $rules['category'] = 'required|string|exists:categories,name';
-        $rules['service'] = 'required|string|exists:services,name';
+        $rules['category'] = 'required|numeric|exists:categories,id';
+        $rules['service'] = 'required|numeric|exists:services,id';
         $rules['link'] = 'string';
         $rules['quantity'] = 'numeric';
         $rules['created_by'] = 'required|int|exists:users,id';
