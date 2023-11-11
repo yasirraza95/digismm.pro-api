@@ -509,6 +509,23 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function listOrderbyUser(Request $request)
+    {
+        $id = $request->id;
+        $result = Order::where('created_by', $id)->get();
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $result,
+            'counter' => $counter,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function listServices(Request $request)
     {
         $result = Service::get();

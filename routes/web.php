@@ -41,6 +41,7 @@ Route::put('service/{id}', 'GeneralController@updateService');
 Route::delete('service/{id}', 'GeneralController@deleteService');
 
 // TODO payment check
+Route::post('list-order/{id}', 'GeneralController@listOrderbyUser');
 Route::post('order', 'GeneralController@newOrder');
 
 
