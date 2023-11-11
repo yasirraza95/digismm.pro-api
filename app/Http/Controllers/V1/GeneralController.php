@@ -524,6 +524,22 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function listServicebyCategory(Request $request)
+    {
+        $id = $request->id;
+        $result = Service::where('category_id', $id)->get();
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function listCategories(Request $request)
     {
         $result = Category::get();
