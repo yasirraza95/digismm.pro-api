@@ -509,7 +509,7 @@ class GeneralController extends Controller
         return $result;
     }
 
-    public function listPaymentsbyUser(Request $request)
+    public function listPaymentbyUser(Request $request)
     {
         $id = $request->id;
         $result = Payment::where('created_by', $id)get();
