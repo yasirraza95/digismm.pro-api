@@ -45,6 +45,8 @@ Route::delete('service/{id}', 'GeneralController@deleteService');
 Route::get('list-order/{id}', 'GeneralController@listOrderbyUser');
 Route::post('order', 'GeneralController@newOrder');
 
+Route::post('subscription', 'GeneralController@addSubscription');
+
 
 Route::get('check-username/{username}', 'GeneralController@checkUsernameExist');
 Route::post('recipient-register', 'GeneralController@recipientRegister');
@@ -76,7 +78,6 @@ Route::get('list-donor', 'GeneralController@listBloodDonor');
 Route::get('list-all-donor', 'GeneralController@listAllBloodDonor');
 Route::get('get-donor/{id}', 'GeneralController@getBloodDonorById');
 Route::get('marquee', 'GeneralController@getMarquee');
-Route::post('subscription', 'GeneralController@addSubscription');
 Route::post('suggest-area', 'GeneralController@areaSuggestion');
 Route::get('user-views', 'GeneralController@userViews');
 
