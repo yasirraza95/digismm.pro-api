@@ -26,6 +26,7 @@ Route::post('register', 'GeneralController@register');
 Route::get('check-forgot/{token}', 'GeneralController@checkForgotToken');
 Route::post('make-payment', 'GeneralController@makePayment');
 Route::get('list-payments', 'GeneralController@listPayments');
+Route::get('list-payment/{id}', 'GeneralController@listPaymentbyUser');
 Route::put('payment-action/{id}', 'GeneralController@paymentAction');
 Route::post('contact', 'GeneralController@contactSubmit');
 

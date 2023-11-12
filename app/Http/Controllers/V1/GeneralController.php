@@ -509,6 +509,22 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function listPaymentsbyUser(Request $request)
+    {
+        $id = $request->id;
+        $result = Payment::where('created_by', $id)get();
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function listOrderbyUser(Request $request)
     {
         $id = $request->id;
