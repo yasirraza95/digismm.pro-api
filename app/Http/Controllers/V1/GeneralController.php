@@ -519,7 +519,7 @@ class GeneralController extends Controller
             $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
             $data['status'] = ucfirst($data->status);
 
-            $newResult = $data;
+            $newResult[] = $data;
         }
 
         $counter = count($result);
@@ -548,7 +548,7 @@ class GeneralController extends Controller
             $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
             $data['status'] = ucfirst($data->status);
 
-            $newResult = $data;
+            $newResult[] = $data;
         }
 
         $counter = count($result);
