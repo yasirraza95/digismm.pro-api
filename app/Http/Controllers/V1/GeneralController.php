@@ -512,7 +512,7 @@ class GeneralController extends Controller
     public function listPaymentbyUser(Request $request)
     {
         $id = $request->id;
-        $result = Payment::where('created_by', $id)get();
+        $result = Payment::where('created_by', $id)->get();
 
         $counter = count($result);
         $counter > 0 ? ($status = 200) : ($status = 404);
