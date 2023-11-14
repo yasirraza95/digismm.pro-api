@@ -582,7 +582,7 @@ class GeneralController extends Controller
     public function listServicebyCategory(Request $request)
     {
         $name = $request->name;
-        $category = Category::select('id')->where('name', 'like', '%' . $name . '%')->first();
+        $category = Category::select('id')->where('name', 'like', '%' . $name . '%')->firstOrFail();
         $result = Service::where('category_id', $category->id)->get();
 
         $counter = count($result);
