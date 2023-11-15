@@ -570,8 +570,15 @@ class GeneralController extends Controller
         $counter = count($result);
         $counter > 0 ? ($status = 200) : ($status = 404);
 
+        $newResult = [];
+        foreach($result as $data) {
+            $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
+
+            $newResult[] = $data;
+        }
+
         $data = [
-            'response' => $result,
+            'response' => $newResult,
             'counter' => $counter,
         ];
 
