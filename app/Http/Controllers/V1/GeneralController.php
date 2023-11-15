@@ -640,6 +640,7 @@ class GeneralController extends Controller
 
         $data = [
             'response' => $newResult,
+            'counter' => $counter,
         ];
 
         $result = $this->successResponse($request, $data, $status);
