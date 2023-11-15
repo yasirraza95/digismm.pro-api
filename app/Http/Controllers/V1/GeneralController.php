@@ -599,6 +599,31 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function listDashboardCounter(Request $request)
+    {
+        $categories = Category::count();
+        $services = Service::count();
+        $orders = Order::count();
+        $trx = Payment::count();
+
+        $result = [
+            "categories" => $categories,
+            "services" => $services,
+            "orders" => $orders,
+            "trx" => $trx,
+        ];
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function listCategories(Request $request)
     {
         $result = Category::get();

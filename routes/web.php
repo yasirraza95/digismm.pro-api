@@ -45,6 +45,8 @@ Route::delete('service/{id}', 'GeneralController@deleteService');
 Route::get('list-order/{id}', 'GeneralController@listOrderbyUser');
 Route::post('order', 'GeneralController@newOrder');
 
+Route::get('dashboard-counter', 'GeneralController@listDashboardCounter');
+
 Route::post('subscription', 'GeneralController@addSubscription');
 
 
