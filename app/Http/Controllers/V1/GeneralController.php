@@ -1343,8 +1343,8 @@ class GeneralController extends Controller
 
         $category = Category::where('name', $request->category)->firstOrFail();
 
-        $insert = ['category_id' => $category->id, 'created_by' => $request->created_by, 'max' => $request->maximum,
-        'created_ip' => $request->ip(), 'name' => $request->name, 'rate' => $request->rate, 'min' => $request->minimum ];
+        $insert = ['category_id' => $category->id, 'created_by' => $request->created_by, 'max' => $request->max,
+        'created_ip' => $request->ip(), 'name' => $request->name, 'rate' => $request->rate, 'min' => $request->min ];
         Service::insert($insert);
 
         $data = [
