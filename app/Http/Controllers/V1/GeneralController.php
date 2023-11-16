@@ -1341,7 +1341,7 @@ class GeneralController extends Controller
         $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
-        $category = Category::findOrFail($request->category);
+        $category = Category::where('name', $request->category)->first();
 
         $insert = ['category_id' => $category->id, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'name' => $request->name, 'rate' => $request->rate, 'price' => $request->price ];
         Service::insert($insert);
