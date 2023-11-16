@@ -706,6 +706,20 @@ class GeneralController extends Controller
         return $result;
     }
 
+
+    public function getServiceById(Request $request)
+    {
+        $result = Service::findOrFail($request->id);
+
+        $status = 200;
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function paymentAction(Request $request)
     {
         $rules['updated_by'] = 'required|int|exists:users,id';
@@ -783,6 +797,39 @@ class GeneralController extends Controller
         $status = 200;
         $data = [
             'response' => "Category information updated",
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function updateService(Request $request)
+    {
+        $rules['category'] = 'required|string';
+        $rules['service'] = 'required|string';
+        $rules['rate'] = 'required|string';
+        $rules['min'] = 'required|string';
+        $rules['max'] = 'required|string';
+        $rules['updated_by'] = 'required|int|exists:users,id';
+        
+        $this->validate($request, $rules);
+        
+        $id = $request->id;
+        $category = $request->category;
+        $service = $request->service;
+        $rate = $request->rate;
+        $price = $request->price;
+        $updated_by = $request->updated_by;
+        $ip = $request->ip();
+        
+        $category = Category::where('name', $category)->first();
+        $instance = Service::findOrFail($id);
+        $update = ["category_id" => $category->id, "name" => $service, "min" => $min,  "max" => $max,  "rate" => $rate, 
+         "updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name];
+        $instance->update($update);
+        $status = 200;
+        $data = [
+            'response' => "Service information updated",
         ];
 
         $result = $this->successResponse($request, $data, $status);
