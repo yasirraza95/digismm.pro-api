@@ -829,7 +829,7 @@ class GeneralController extends Controller
         $category = Category::where('name', $category)->first();
         $instance = Service::findOrFail($id);
         $update = ["category_id" => $category->id, "name" => $service, "min" => $min,  "max" => $max,  "rate" => $rate, 
-         "updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name];
+         "updated_by" => $updated_by, "updated_ip" => $ip];
         $instance->update($update);
         $status = 200;
         $data = [
