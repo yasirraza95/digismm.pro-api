@@ -706,10 +706,13 @@ class GeneralController extends Controller
         return $result;
     }
 
-
+// TODO category fetch
     public function getServiceById(Request $request)
     {
         $result = Service::findOrFail($request->id);
+
+        $category = Category::where('id', $result->category_id)->first();
+        $result->category = $category->name;
 
         $status = 200;
         $data = [
