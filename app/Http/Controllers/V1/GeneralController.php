@@ -498,11 +498,19 @@ class GeneralController extends Controller
     {
         $result = Payment::get();
 
+        $newResult = [];
+        foreach($result as $data) {
+            $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
+            $data['status'] = ucfirst($data->status);
+
+            $newResult[] = $data;
+        }
+
         $counter = count($result);
         $counter > 0 ? ($status = 200) : ($status = 404);
 
         $data = [
-            'response' => $result,
+            'response' => $newResult,
         ];
 
         $result = $this->successResponse($request, $data, $status);
