@@ -684,6 +684,19 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function getCategoryById(Request $request)
+    {
+        $result = Category::findOrFail($request->id);
+
+        $status = 200;
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function paymentAction(Request $request)
     {
         $rules['updated_by'] = 'required|int|exists:users,id';

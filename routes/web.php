@@ -32,6 +32,7 @@ Route::post('contact', 'GeneralController@contactSubmit');
 
 Route::get('list-categories', 'GeneralController@listCategories');
 Route::post('add-category', 'GeneralController@addCategory');
+Route::get('category/{id}', 'GeneralController@getCategoryById');
 Route::put('category/{id}', 'GeneralController@updateCategory');
 Route::delete('category/{id}', 'GeneralController@deleteCategory');
 
