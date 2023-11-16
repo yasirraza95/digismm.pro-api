@@ -600,6 +600,8 @@ class GeneralController extends Controller
 
         $newResult = [];
         foreach($result as $data) {
+            $category = Category::select('name')->where('id', $data->category_id)->first();
+            $data['category'] = $category->name;
             $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
 
             $newResult[] = $data;
