@@ -821,7 +821,8 @@ class GeneralController extends Controller
         $category = $request->category;
         $service = $request->service;
         $rate = $request->rate;
-        $price = $request->price;
+        $min = $request->min;
+        $max = $request->max;
         $updated_by = $request->updated_by;
         $ip = $request->ip();
         
