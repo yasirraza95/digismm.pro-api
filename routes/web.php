@@ -38,7 +38,7 @@ Route::delete('category/{id}', 'GeneralController@deleteCategory');
 
 Route::get('list-services', 'GeneralController@listServices');
 Route::get('service/{id}', 'GeneralController@getServiceById');
-Route::put('service/{id}', 'GeneralController@updateService');
+// Route::put('service/{id}', 'GeneralController@updateService');
 Route::post('list-service', 'GeneralController@listServicebyCategory');
 Route::post('add-service', 'GeneralController@addService');
 Route::put('service/{id}', 'GeneralController@updateService');

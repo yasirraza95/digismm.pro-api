@@ -746,36 +746,36 @@ class GeneralController extends Controller
         return $result;
     }
 
-    public function updateService(Request $request)
-    {
-        $rules['category'] = 'required|string|exists:categories,name';
-        $rules['name'] = 'required|string';
-        $rules['rate'] = 'string';
-        $rules['price'] = 'string';
-        $rules['updated_by'] = 'required|int|exists:users,id';
+    // public function updateService(Request $request)
+    // {
+    //     $rules['category'] = 'required|string|exists:categories,name';
+    //     $rules['name'] = 'required|string';
+    //     $rules['rate'] = 'string';
+    //     $rules['price'] = 'string';
+    //     $rules['updated_by'] = 'required|int|exists:users,id';
         
-        $this->validate($request, $rules);
+    //     $this->validate($request, $rules);
         
-        $id = $request->id;
-        $name = $request->name;
-        $rate = $request->rate;
-        $price = $request->price;
-        $updated_by = $request->updated_by;
-        $ip = $request->ip();
+    //     $id = $request->id;
+    //     $name = $request->name;
+    //     $rate = $request->rate;
+    //     $price = $request->price;
+    //     $updated_by = $request->updated_by;
+    //     $ip = $request->ip();
 
-        $category = Category::findOrFail($request->category);
+    //     $category = Category::findOrFail($request->category);
         
-        $instance = Service::findOrFail($id);
-        $update = ['category_id' => $category->id, "updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name, "rate" => $rate, "price" => $price];
-        $instance->update($update);
+    //     $instance = Service::findOrFail($id);
+    //     $update = ['category_id' => $category->id, "updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name, "rate" => $rate, "price" => $price];
+    //     $instance->update($update);
         
-        $data = [
-            'response' => "Service information updated",
-        ];
+    //     $data = [
+    //         'response' => "Service information updated",
+    //     ];
 
-        $result = $this->successResponse($request, $data, $status);
-        return $result;
-    }
+    //     $result = $this->successResponse($request, $data, $status);
+    //     return $result;
+    // }
 
     public function updateCategory(Request $request)
     {
