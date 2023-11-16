@@ -771,7 +771,7 @@ class GeneralController extends Controller
         $instance = Category::findOrFail($id);
         $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "name" => $name];
         $instance->update($update);
-        
+        $status = 200;
         $data = [
             'response' => "Category information updated",
         ];
