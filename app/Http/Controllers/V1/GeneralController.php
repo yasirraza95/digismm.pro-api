@@ -744,7 +744,7 @@ class GeneralController extends Controller
         $instance->status = $reqStatus;
         
         $user = User::where('id', $userId)->first();
-        $oldPts = $user->balance;
+        $oldPts = $user->points;
         $newPts = $instance->amount;
         $totalPts = $oldPts + $newPts;
         
