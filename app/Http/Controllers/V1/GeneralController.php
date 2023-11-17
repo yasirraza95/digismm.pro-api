@@ -751,7 +751,7 @@ class GeneralController extends Controller
         
         $instance->update();
 
-        if($type == 'approved') {
+        if($reqStatus == 'approved') {
             $user->points = $totalPts;
             $user->update();
         }
