@@ -738,8 +738,10 @@ class GeneralController extends Controller
         $ip = $request->ip();
         
         $instance = Payment::findOrFail($id);
-        $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "status" => $reqStatus];
-        $instance->update($update);
+        $instance->updated_by = $updated_by;
+        $instance->updated_ip = $ip;
+        $instance->status = $reqStatus;
+        $instance->update();
         
         $status = 200;
         $data = [
