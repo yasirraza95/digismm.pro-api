@@ -1434,14 +1434,17 @@ class GeneralController extends Controller
 
     public function newOrder(Request $request)
     {
-        $rules['category_id'] = 'required|numeric|exists:categories,id';
-        $rules['service_id'] = 'required|numeric|exists:services,id';
+        $rules['category'] = 'required|string|exists:categories,name';
+        $rules['service'] = 'required|string|exists:services,name';
         $rules['link'] = 'string';
         $rules['quantity'] = 'numeric';
         $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
-        $insert = ['category_id' => $request->category_id, 'service_id' => $request->service_id, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity ];
+        $category = Category::where('name', 'like', $request->category)->first();
+        $service = Service::where('name', 'like', $request->service)->first();
+
+        $insert = ['category_id' => $category->id, 'service_id' => $service->id, 'created_by' => $request->created_by, 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity ];
         $service = Service::select('price')->where('id', $request->service_id)->first();
         $insert['price'] = $service->price * $request->quantity;
 
