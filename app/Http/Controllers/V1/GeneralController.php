@@ -750,8 +750,10 @@ class GeneralController extends Controller
         
         $instance->update();
 
-        $user->points = $totalPts;
-        $user->update();
+        if($type == 'approved') {
+            $user->points = $totalPts;
+            $user->update();
+        }
 
         
         $status = 200;
