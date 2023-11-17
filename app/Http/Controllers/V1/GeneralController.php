@@ -743,7 +743,7 @@ class GeneralController extends Controller
         $instance->updated_ip = $ip;
         $instance->status = $reqStatus;
         
-        $user = User::where('id', $userId)->first();
+        $user = User::select('id','points')->where('id', $userId)->first();
         $oldPts = $user->points;
         $newPts = $instance->amount;
         $totalPts = $oldPts + $newPts;
