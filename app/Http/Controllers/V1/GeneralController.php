@@ -735,13 +735,14 @@ class GeneralController extends Controller
         $type = $request->type;
         $reqStatus = $request->status;
         $updated_by = $request->updated_by;
-        $userId = $request->created_by;
         $ip = $request->ip();
         
         $instance = Payment::findOrFail($id);
         $instance->updated_by = $updated_by;
         $instance->updated_ip = $ip;
         $instance->status = $reqStatus;
+
+        $userId = $instance->created_by;
         
         $user = User::select('id','points')->where('id', $userId)->first();
         $oldPts = $user->points;
