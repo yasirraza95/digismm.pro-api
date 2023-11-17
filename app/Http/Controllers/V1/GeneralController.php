@@ -497,7 +497,7 @@ class GeneralController extends Controller
 
     public function listPayments(Request $request)
     {
-        $result = Payment::get();
+        $result = Payment::orderBy('id', 'DESC')->get();
 
         $newResult = [];
         foreach($result as $data) {
