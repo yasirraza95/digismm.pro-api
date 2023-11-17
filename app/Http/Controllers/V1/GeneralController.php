@@ -741,6 +741,7 @@ class GeneralController extends Controller
         $update = ["updated_by" => $updated_by, "updated_ip" => $ip, "status" => $reqStatus];
         $instance->update($update);
         
+        $status = 200;
         $data = [
             'response' => "Payment status updated",
         ];
