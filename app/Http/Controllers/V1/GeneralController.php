@@ -1437,8 +1437,8 @@ class GeneralController extends Controller
     {
         $rules['category'] = 'required|string|exists:categories,name';
         $rules['service'] = 'required|string|exists:services,name';
-        $rules['link'] = 'string';
-        $rules['quantity'] = 'numeric';
+        $rules['link'] = 'required|string';
+        $rules['quantity'] = 'required|numeric';
         $rules['created_by'] = 'required|int|exists:users,id';
         $this->validate($request, $rules);
 
