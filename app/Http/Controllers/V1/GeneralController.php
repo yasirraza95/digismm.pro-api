@@ -728,7 +728,6 @@ class GeneralController extends Controller
     {
         $rules['updated_by'] = 'required|int|exists:users,id';
         $rules['status'] = 'required|in:approved,rejected';
-
         
         $this->validate($request, $rules);
         
@@ -736,13 +735,24 @@ class GeneralController extends Controller
         $type = $request->type;
         $reqStatus = $request->status;
         $updated_by = $request->updated_by;
+        $userId = $request->created_by;
         $ip = $request->ip();
         
         $instance = Payment::findOrFail($id);
         $instance->updated_by = $updated_by;
         $instance->updated_ip = $ip;
         $instance->status = $reqStatus;
+        
+        $user = User::where('id', $userId)->first();
+        $oldPts = $user->balance;
+        $newPts = $instance->amount;
+        $totalPts = $oldPts + $newPts;
+        
         $instance->update();
+
+        $user->points = $totalPts;
+        $user->update();
+
         
         $status = 200;
         $data = [
