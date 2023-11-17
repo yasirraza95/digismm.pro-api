@@ -128,7 +128,7 @@ class GeneralController extends Controller
     public function userInfo(Request $request)
     {
         $userId = $request->id;
-        $user = User::select('id', 'points')->findOrFail($userId);
+        $user = User::select('id', 'points', 'name')->findOrFail($userId);
         $order = Order::selectRaw('sum(price) as spent')->where('created_by', $userId)->whereNotIn('status', ['cancelled', 'refunded'])->first();
         $totalOrder = Order::where('created_by', $userId)->count();
         $completedOrder = Order::where('created_by', $userId)->where('status', 'completed')->count();
@@ -140,6 +140,7 @@ class GeneralController extends Controller
         $refundedOrder = Order::where('created_by', $userId)->where('status', 'refunded')->count();
 
         $response = [
+            'name' => $user->name,
             'balance' => $user->points,
             'spent' => $order->spent ?? 0,
             'total_orders' => $totalOrder,
