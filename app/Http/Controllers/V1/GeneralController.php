@@ -1475,7 +1475,7 @@ class GeneralController extends Controller
             'category_id' => $category->id, 'service_id' => $service->id, 'created_by' => $request->created_by,
             'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity 
         ];
-        $service = Service::select('rate')->where('id', $request->service_id)->first();
+        $service = Service::select('rate')->where('name', 'like', $request->service)->first();
         $insert['price'] = $service->rate * $request->quantity;
 
         Order::insert($insert);
