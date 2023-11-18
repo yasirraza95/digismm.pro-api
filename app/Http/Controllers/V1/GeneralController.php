@@ -726,7 +726,7 @@ class GeneralController extends Controller
 
     public function getServiceInfoByName(Request $request)
     {
-        $result = Service::where('name', 'like', '%' . $request->name . '%')->first();
+        $result = Service::select('min', 'max')->where('name', 'like', '%' . $request->name . '%')->first();
         
         $status = 200;
         $data = [
