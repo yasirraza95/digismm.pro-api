@@ -782,7 +782,7 @@ class GeneralController extends Controller
     public function orderAction(Request $request)
     {
         $rules['updated_by'] = 'required|int|exists:users,id';
-        $rules['status'] = 'required|in:approved,rejected';
+        $rules['status'] = 'required|in:completed,processing,progress,pending,partial,cancelled,refunded';
         
         $this->validate($request, $rules);
         
