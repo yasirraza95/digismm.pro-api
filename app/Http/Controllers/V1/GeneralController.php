@@ -801,7 +801,7 @@ class GeneralController extends Controller
         
         $user = User::select('id','points')->where('id', $userId)->first();
         $oldPts = $user->points;
-        $newPts = $instance->amount;
+        $newPts = $instance->price;
         $totalPts = $oldPts + $newPts;
         
         $instance->update();
