@@ -806,7 +806,7 @@ class GeneralController extends Controller
         
         $instance->update();
 
-        if($reqStatus == 'approved') {
+        if($reqStatus == 'refund') {
             $user->points = $totalPts;
             $user->update();
         }
@@ -1545,7 +1545,7 @@ class GeneralController extends Controller
                 'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity 
             ];
             $service = Service::select('rate')->where('name', 'like', $request->service)->first();
-            $insert['price'] = $service->rate * $request->quantity;
+            $insert['price'] = ($service->rate / 1000) * $request->quantity;
     
             Order::insert($insert);
     
