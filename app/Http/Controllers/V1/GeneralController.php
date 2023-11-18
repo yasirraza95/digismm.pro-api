@@ -1470,6 +1470,17 @@ class GeneralController extends Controller
 
         $category = Category::where('name', 'like', $request->category)->first();
         $service = Service::where('name', 'like', $request->service)->first();
+        $minQty = $service->min;
+        $maxQty = $service->max;
+
+        if($request->quantity < $min || $request->quantity > $max) {
+            $error = ["quantity" => "Quantity must be in range"];
+            $data = [
+                'response' => $error,
+            ];
+            $status = 400;
+            return $this->successResponse($request, $data, $status);
+        }
 
         $insert = [
             'category_id' => $category->id, 'service_id' => $service->id, 'created_by' => $request->created_by,
