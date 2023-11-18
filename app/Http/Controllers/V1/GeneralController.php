@@ -779,6 +779,48 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function orderAction(Request $request)
+    {
+        $rules['updated_by'] = 'required|int|exists:users,id';
+        $rules['status'] = 'required|in:approved,rejected';
+        
+        $this->validate($request, $rules);
+        
+        $id = $request->id;
+        $type = $request->type;
+        $reqStatus = $request->status;
+        $updated_by = $request->updated_by;
+        $ip = $request->ip();
+        
+        $instance = Order::findOrFail($id);
+        $instance->updated_by = $updated_by;
+        $instance->updated_ip = $ip;
+        $instance->status = $reqStatus;
+
+        $userId = $instance->created_by;
+        
+        $user = User::select('id','points')->where('id', $userId)->first();
+        $oldPts = $user->points;
+        $newPts = $instance->amount;
+        $totalPts = $oldPts + $newPts;
+        
+        $instance->update();
+
+        if($reqStatus == 'approved') {
+            $user->points = $totalPts;
+            $user->update();
+        }
+
+        
+        $status = 200;
+        $data = [
+            'response' => "Payment status updated",
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     // public function updateService(Request $request)
     // {
     //     $rules['category'] = 'required|string|exists:categories,name';
