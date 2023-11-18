@@ -724,6 +724,19 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function getServiceByName(Request $request)
+    {
+        $result = Service::where('name', 'like', $request->name)->first();
+        
+        $status = 200;
+        $data = [
+            'response' => $result,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function paymentAction(Request $request)
     {
         $rules['updated_by'] = 'required|int|exists:users,id';
