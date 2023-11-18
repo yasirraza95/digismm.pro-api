@@ -1485,22 +1485,37 @@ class GeneralController extends Controller
         $userPts = $user->points;
         $servicePts = $service->rate;
 
-        $insert = [
-            'category_id' => $category->id, 'service_id' => $service->id, 'created_by' => $request->created_by,
-            'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity 
-        ];
-        $service = Service::select('rate')->where('name', 'like', $request->service)->first();
-        $insert['price'] = $service->rate * $request->quantity;
+        if($servicePts > $userPts) {
+            $data = [
+                'response' => "You don't have enough balance",
+            ];
+            $status = 400;
+    
+            $result = $this->successResponse($request, $data, $status);
+            return $result;
+        } else if($servicePts <= $userPts) {
+            $updatedPoints = $userPts - $servicePts;
+            $user->points = $updatedPoints;
+            $user->update();
 
-        Order::insert($insert);
+            $insert = [
+                'category_id' => $category->id, 'service_id' => $service->id, 'created_by' => $request->created_by,
+                'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity 
+            ];
+            $service = Service::select('rate')->where('name', 'like', $request->service)->first();
+            $insert['price'] = $service->rate * $request->quantity;
+    
+            Order::insert($insert);
+    
+            $data = [
+                'response' => "Order created successfully",
+            ];
+            $status = 200;
+    
+            $result = $this->successResponse($request, $data, $status);
+            return $result;
+        }
 
-        $data = [
-            'response' => "Order created successfully",
-        ];
-        $status = 200;
-
-        $result = $this->successResponse($request, $data, $status);
-        return $result;
     }
 
     public function addCategory(Request $request)
