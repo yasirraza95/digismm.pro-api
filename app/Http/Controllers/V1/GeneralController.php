@@ -1474,9 +1474,8 @@ class GeneralController extends Controller
         $maxQty = $service->max;
 
         if($request->quantity < $minQty || $request->quantity > $maxQty) {
-            $error = ["quantity" => ["Quantity must be in range"]];
             $data = [
-                'response' => $error,
+                'quantity' => ["Quantity must be in range"],
             ];
             $status = 400;
             return $this->successResponse($request, $data, $status);
