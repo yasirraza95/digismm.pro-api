@@ -1481,6 +1481,10 @@ class GeneralController extends Controller
             return $this->successResponse($request, $data, $status);
         }
 
+        $user = User::select('points')->findOrFail($request->created_by);
+        $userPts = $user->points;
+        $servicePts = $service->rate;
+
         $insert = [
             'category_id' => $category->id, 'service_id' => $service->id, 'created_by' => $request->created_by,
             'created_ip' => $request->ip(), 'link' => $request->link, 'quantity' => $request->quantity 
