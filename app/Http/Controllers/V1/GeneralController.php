@@ -724,7 +724,7 @@ class GeneralController extends Controller
         return $result;
     }
 
-    public function getServiceByName(Request $request)
+    public function getServiceInfoByName(Request $request)
     {
         $result = Service::where('name', 'like', $request->name)->first();
         
