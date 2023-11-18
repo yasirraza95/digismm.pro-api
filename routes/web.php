@@ -40,7 +40,7 @@ Route::get('list-services', 'GeneralController@listServices');
 Route::get('service/{id}', 'GeneralController@getServiceById');
 Route::post('service-info', 'GeneralController@getServiceInfoByName');
 // Route::put('service/{id}', 'GeneralController@updateService');
-Route::post('list-service', 'GeneralController@listServicebyCategory');
+Route::post('list-service/name', 'GeneralController@listServicebyCategory');
 Route::post('add-service', 'GeneralController@addService');
 Route::put('service/{id}', 'GeneralController@updateService');
 Route::delete('service/{id}', 'GeneralController@deleteService');
