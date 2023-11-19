@@ -172,10 +172,10 @@ class GeneralController extends Controller
         
         $response = [
             'id' => $userId,
-            'referal' => $referal->sum,
-            'earned' => $earned->sum,
-            'available' => $available->sum,
-            'transferred' => $transferred->sum,
+            'referal' => $referal->sum ?? 0,
+            'earned' => $earned->sum ?? 0,
+            'available' => $available->sum ?? 0,
+            'transferred' => $transferred->sum ?? 0,
         ];
         $status = 200;
         $data = [
