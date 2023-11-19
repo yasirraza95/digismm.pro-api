@@ -575,6 +575,35 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function listLimitedOrderbyUser(Request $request)
+    {
+        $id = $request->id;
+        $result = Order::where('created_by', $id)->limit(10)->get();
+
+        $newResult = [];
+        foreach($result as $data) {
+            $service = Service::where('id', $data->category_id)->first();
+            $category = Category::where('id', $data->service_id)->first();
+            $data['service'] = $service->name;
+            $data['category'] = $category->name;
+            $data['created_at'] = date('d-m-Y', strtotime($data->created_at));
+            $data['status'] = ucfirst($data->status);
+
+            $newResult[] = $data;
+        }
+
+        $counter = count($result);
+        $counter > 0 ? ($status = 200) : ($status = 404);
+
+        $data = [
+            'response' => $newResult,
+            'counter' => $counter,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function listAllOrders(Request $request)
     {
         $result = Order::get();

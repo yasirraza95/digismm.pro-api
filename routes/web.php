@@ -48,6 +48,7 @@ Route::delete('service/{id}', 'GeneralController@deleteService');
 
 // TODO payment check
 Route::get('list-order/{id}', 'GeneralController@listOrderbyUser');
+Route::get('list-order-limited/{id}', 'GeneralController@listLimitedOrderbyUser');
 Route::get('list-orders', 'GeneralController@listAllOrders');
 Route::post('order', 'GeneralController@newOrder');
 
