@@ -917,7 +917,6 @@ class GeneralController extends Controller
             $user->update();
         }
 
-        
         $status = 200;
         $data = [
             'response' => "Payment status updated",
