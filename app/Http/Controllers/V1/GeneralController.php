@@ -128,7 +128,7 @@ class GeneralController extends Controller
     public function userInfo(Request $request)
     {
         $userId = $request->id;
-        $user = User::select('id', 'points', 'name')->findOrFail($userId);
+        $user = User::select('id', 'points', 'fname', 'lname')->findOrFail($userId);
         $order = Order::selectRaw('sum(price) as spent')->where('created_by', $userId)->whereNotIn('status', ['cancelled', 'refunded'])->first();
         $totalOrder = Order::where('created_by', $userId)->count();
         $completedOrder = Order::where('created_by', $userId)->where('status', 'completed')->count();
@@ -140,7 +140,7 @@ class GeneralController extends Controller
         $refundedOrder = Order::where('created_by', $userId)->where('status', 'refunded')->count();
 
         $response = [
-            'name' => $user->name,
+            'name' => $user->fname . " " . $user->lname,
             'balance' => $user->points,
             'spent' => $order->spent ?? 0,
             'total_orders' => $totalOrder,
@@ -368,7 +368,9 @@ class GeneralController extends Controller
         $this->validate($request, $rules);
 
         $userObject = [
-            "name" => addslashes($request->name),
+            "fname" => addslashes($request->fname),
+            "lname" => addslashes($request->fname),
+            "phone" => addslashes($request->phone),
             "email" => addslashes($request->email),
             "password" => addslashes($request->password),
             "created_ip" => $request->ip(),
