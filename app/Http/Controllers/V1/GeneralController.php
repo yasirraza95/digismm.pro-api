@@ -400,7 +400,12 @@ class GeneralController extends Controller
             "password" => addslashes($request->password),
             "created_ip" => $request->ip(),
         ];
-
+        
+        if($request->referId) {
+            $userObject['refer_id'] = $request->referal;
+            $affiliate = ['points' => '0.1', 'created_by' => $request->referId, 'created_ip' => $request->ip()];
+            Affiliate::insert($affiliate);
+        }
         // TODO
         $subject = 'Digi SMM Account Registration';
         // $newsletterData = Newsletter::findOrFail(2);
