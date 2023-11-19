@@ -840,6 +840,40 @@ class GeneralController extends Controller
         return $result;
     }
 
+    public function referAction(Request $request)
+    {
+        $rules['updated_by'] = 'required|int|exists:users,id';
+        
+        $this->validate($request, $rules);
+        
+        $id = $request->updated_by;
+        $ip = $request->ip();
+        
+        $newPts = 0;
+        $instance = Affiliate::where('created_by', $id)->find();
+        foreach($instance as $data) {
+            $instance->updated_by = $id;
+            $instance->updated_ip = $ip;
+            $instance->status = "earned";
+            $newPts += $instance->points;
+            $instance->update();
+        }
+
+        $user = User::select('id','points')->where('id', $id)->first();
+        $oldPts = $user->points;
+        $totalPts = $oldPts + $newPts;
+        $user->points = $totalPts;
+        $user->update();
+        
+        $status = 200;
+        $data = [
+            'response' => "Amount transferred",
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
     public function orderAction(Request $request)
     {
         $rules['updated_by'] = 'required|int|exists:users,id';
