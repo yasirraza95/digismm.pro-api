@@ -846,7 +846,7 @@ class GeneralController extends Controller
         
         // $this->validate($request, $rules);
         
-        $id = $request->updated_by;
+        $id = $request->id;
         $ip = $request->ip();
         
         $newPts = 0;
