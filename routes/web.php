@@ -21,6 +21,7 @@ $router->get('/version', function () use ($router) {
 Route::post('login', 'GeneralController@login');
 Route::post('admin-login', 'GeneralController@adminLogin');
 Route::get('user-info/{id}', 'GeneralController@userInfo');
+Route::get('refer-info/{id}', 'GeneralController@referInfo');
 Route::get('profile', 'GeneralController@profile');
 Route::post('register', 'GeneralController@register');
 Route::get('check-forgot/{token}', 'GeneralController@checkForgotToken');

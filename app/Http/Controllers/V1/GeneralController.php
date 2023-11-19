@@ -17,6 +17,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\CityArea;
 use App\Models\Volunteer;
+use App\Models\Affiliate;
 use App\Models\Log;
 use App\Traits\ApiResponser;
 use Illuminate\Support\Facades\Mail;
@@ -151,6 +152,29 @@ class GeneralController extends Controller
             'partial_orders' => $partialOrder,
             'cancelled_orders' => $cancelledOrder,
             'refunded_orders' => $refundedOrder,
+        ];
+        $status = 200;
+        $data = [
+            'response' => $response,
+        ];
+
+        $result = $this->successResponse($request, $data, $status);
+        return $result;
+    }
+
+    public function referInfo(Request $request)
+    {
+        $userId = $request->id;
+        $referal = Affiliate::selectRaw('sum(id) as sum')->where('created_by', $userId)->first();
+        $earned = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->first();
+        $available = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->where('status', 'available')->first();
+        $transferred = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->where('status', 'transferred')->first();
+        
+        $response = [
+            'referal' => $referal->sum,
+            'earned' => $earned->sum,
+            'available' => $available->sum,
+            'transferred' => $transferred->sum,
         ];
         $status = 200;
         $data = [
