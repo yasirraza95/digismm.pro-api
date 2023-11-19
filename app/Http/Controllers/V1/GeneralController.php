@@ -850,7 +850,7 @@ class GeneralController extends Controller
         $ip = $request->ip();
         
         $newPts = 0;
-        $instance = Affiliate::where('created_by', $id)->find();
+        $instance = Affiliate::where('created_by', $id)->get();
         foreach($instance as $data) {
             $instance->updated_by = $id;
             $instance->updated_ip = $ip;
