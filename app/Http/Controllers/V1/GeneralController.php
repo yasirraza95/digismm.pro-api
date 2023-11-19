@@ -171,6 +171,7 @@ class GeneralController extends Controller
         $transferred = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->where('status', 'transferred')->first();
         
         $response = [
+            'id' => $userId,
             'referal' => $referal->sum,
             'earned' => $earned->sum,
             'available' => $available->sum,
