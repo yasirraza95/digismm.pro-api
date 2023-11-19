@@ -165,7 +165,7 @@ class GeneralController extends Controller
     public function referInfo(Request $request)
     {
         $userId = $request->id;
-        $referal = Affiliate::selectRaw('sum(id) as sum')->where('created_by', $userId)->first();
+        $referal = Affiliate::selectRaw('count(id) as sum')->where('created_by', $userId)->first();
         $earned = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->first();
         $available = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->where('status', 'available')->first();
         $transferred = Affiliate::selectRaw('sum(points) as sum')->where('created_by', $userId)->where('status', 'transferred')->first();
