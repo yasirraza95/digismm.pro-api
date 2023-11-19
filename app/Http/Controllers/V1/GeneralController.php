@@ -858,7 +858,7 @@ class GeneralController extends Controller
                 $instance->updated_ip = $ip;
                 $instance->status = "earned";
                 $newPts += $instance->points;
-                $instance->update();
+                $data->update();
             }
     
             $user = User::select('id','points')->where('id', $id)->first();
