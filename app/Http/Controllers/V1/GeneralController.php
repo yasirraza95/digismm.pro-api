@@ -850,7 +850,7 @@ class GeneralController extends Controller
         $ip = $request->ip();
         
         $newPts = 0;
-        $instance = Affiliate::where('created_by', $id)->get();
+        $instance = Affiliate::where('status','pending')->where('created_by', $id)->get();
         if(count($instance) > 0) {
 
             foreach($instance as $data) {
