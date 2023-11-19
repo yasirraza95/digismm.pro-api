@@ -842,9 +842,9 @@ class GeneralController extends Controller
 
     public function referAction(Request $request)
     {
-        $rules['updated_by'] = 'required|int|exists:users,id';
+        // $rules['updated_by'] = 'required|int|exists:users,id';
         
-        $this->validate($request, $rules);
+        // $this->validate($request, $rules);
         
         $id = $request->updated_by;
         $ip = $request->ip();
