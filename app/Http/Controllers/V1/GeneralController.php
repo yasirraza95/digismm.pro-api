@@ -401,9 +401,9 @@ class GeneralController extends Controller
             "created_ip" => $request->ip(),
         ];
         
-        if($request->referId) {
+        if($request->refer_id) {
             $userObject['refer_id'] = $request->referal;
-            $affiliate = ['points' => '0.1', 'created_by' => $request->referId, 'created_ip' => $request->ip()];
+            $affiliate = ['points' => '0.1', 'created_by' => $request->refer_id, 'created_ip' => $request->ip()];
             Affiliate::insert($affiliate);
         }
         // TODO
