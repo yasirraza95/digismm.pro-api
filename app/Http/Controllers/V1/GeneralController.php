@@ -851,7 +851,7 @@ class GeneralController extends Controller
         
         $newPts = 0;
         $instance = Affiliate::where('created_by', $id)->get();
-        if(count($instance > 0)) {
+        if(count($instance) > 0) {
 
             foreach($instance as $data) {
                 $instance->updated_by = $id;
