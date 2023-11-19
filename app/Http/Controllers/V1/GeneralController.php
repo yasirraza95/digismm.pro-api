@@ -851,27 +851,38 @@ class GeneralController extends Controller
         
         $newPts = 0;
         $instance = Affiliate::where('created_by', $id)->get();
-        foreach($instance as $data) {
-            $instance->updated_by = $id;
-            $instance->updated_ip = $ip;
-            $instance->status = "earned";
-            $newPts += $instance->points;
-            $instance->update();
+        if(count($instance > 0)) {
+
+            foreach($instance as $data) {
+                $instance->updated_by = $id;
+                $instance->updated_ip = $ip;
+                $instance->status = "earned";
+                $newPts += $instance->points;
+                $instance->update();
+            }
+    
+            $user = User::select('id','points')->where('id', $id)->first();
+            $oldPts = $user->points;
+            $totalPts = $oldPts + $newPts;
+            $user->points = $totalPts;
+            $user->update();
+            
+            $status = 200;
+            $data = [
+                'response' => "Amount transferred",
+            ];
+    
+            $result = $this->successResponse($request, $data, $status);
+            return $result;
+        } else {
+            $status = 404;
+            $data = [
+                'response' => "No Amount available to transfer",
+            ];
+    
+            $result = $this->successResponse($request, $data, $status);
+            return $result;
         }
-
-        $user = User::select('id','points')->where('id', $id)->first();
-        $oldPts = $user->points;
-        $totalPts = $oldPts + $newPts;
-        $user->points = $totalPts;
-        $user->update();
-        
-        $status = 200;
-        $data = [
-            'response' => "Amount transferred",
-        ];
-
-        $result = $this->successResponse($request, $data, $status);
-        return $result;
     }
 
     public function orderAction(Request $request)
