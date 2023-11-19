@@ -44,7 +44,9 @@ class User extends Model implements
     public static function validationRules()
     {
         return [
-            'name' => 'required|string',
+            'fname' => 'required|string',
+            'lname' => 'required|string',
+            'phone' => 'required|string',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
             'password' => 'required|string',
         ];
