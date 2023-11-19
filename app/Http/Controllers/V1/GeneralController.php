@@ -857,7 +857,7 @@ class GeneralController extends Controller
                 $instance->updated_by = $id;
                 $instance->updated_ip = $ip;
                 $instance->status = "earned";
-                $newPts += $instance->points;
+                $newPts += $data->points;
                 $data->update();
             }
     
